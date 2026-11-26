@@ -32,7 +32,7 @@ describe('entrar', () => {
     const code = el.querySelector('textarea')!, name = el.querySelector('input')!
     code.value = `oi! ${inviteText}`; code.dispatchEvent(new Event('input'))
     name.value = 'Zé'
-    ;[...el.querySelectorAll('button')].find((b) => b.className === 'primary')!.click()
+    ;(el.querySelector('button.primary') as HTMLElement).click()
     await flush()
     expect(go).toHaveBeenCalledOnce()
     expect(go.mock.calls[0][0].name).toBe('Praia ☀')
@@ -43,7 +43,7 @@ describe('entrar', () => {
     const code = el.querySelector('textarea')!
     code.value = 'lixo'; code.dispatchEvent(new Event('input'))
     expect(el.querySelector('.err')!.textContent).toBe('Convite inválido')
-    ;[...el.querySelectorAll('button')].find((b) => b.className === 'primary')!.click()
+    ;(el.querySelector('button.primary') as HTMLElement).click()
     await flush()
     expect(go).not.toHaveBeenCalled()
   })

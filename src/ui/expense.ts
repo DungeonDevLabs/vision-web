@@ -16,7 +16,7 @@ export async function expenseForm(m: Mission, editId: string | null, done: (save
   const checks = ms.map((x) => ({ id: x.id, box: h('input', { type: 'checkbox', checked: old ? x.id in old.split : true }), name: x.name }))
   const err = h('p', { class: 'err', role: 'alert' })
   const save = h('button', {
-    class: 'primary',
+    class: 'primary block',
     onclick: async () => {
       const cents = parseMoney(amount.value)
       if (cents === null) { err.textContent = t('Valor inválido', 'Invalid amount'); return }
@@ -34,6 +34,6 @@ export async function expenseForm(m: Mission, editId: string | null, done: (save
     desc, amount, date,
     h('label', {}, t('Quem pagou', 'Paid by'), payer),
     h('fieldset', {}, h('legend', {}, t('Dividir entre', 'Split between')), ...checks.map((c) => h('label', { class: 'check' }, c.box, c.name))),
-    err, save, h('button', { onclick: () => done(false) }, t('Cancelar', 'Cancel')),
+    err, save, h('button', { class: 'block', onclick: () => done(false) }, t('Cancelar', 'Cancel')),
   )
 }

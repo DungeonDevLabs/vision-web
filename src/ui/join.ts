@@ -15,7 +15,7 @@ export async function joinScreen(go: (m: Mission) => void, invite: Invite | null
   show()
   code.addEventListener('input', () => { inv = parseInvite(code.value); err.textContent = code.value.trim() && !inv ? t('Convite inválido', 'Invalid invite') : ''; show() })
   const enter = h('button', {
-    class: 'primary',
+    class: 'primary block',
     onclick: async () => {
       if (!inv) { err.textContent = t('Cole um convite válido', 'Paste a valid invite'); return }
       if (!name.value.trim()) { err.textContent = t('Diga seu nome', 'Enter your name'); return }
