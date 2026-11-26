@@ -21,6 +21,7 @@ TypeScript + Vite (sem framework), Vitest (+ jsdom, fake-indexeddb), WebCrypto, 
 | `src/drive/transport.ts` | Drive REST: publicar (público por link, cifrado), ler só com API key, apagar |
 | `src/live.ts` | Transporte real, publicação com atraso de 10 s, estado "precisa entrar" |
 | `src/ui/*` | `join` (entrar), `mission` (gastos + acertos), `expense` (formulário), `support` (moedinha "Apoie o Vision"), `dom` (helpers; texto sempre como texto) |
+| `tools/make-icons.mjs`, `tools/icon/` | Gera os ícones (`public/icons`) a partir do ícone do app Android (cópia dos vetores `ic_launcher_*.xml`); app mudou o ícone? copie os XML e rode `node tools/make-icons.mjs` |
 | `src/ui/sprite.ts`, `src/sprites/` | Sprites em texto copiados do app (`assets/pixel`, uma letra = um pixel, paleta única); `sprite(nome, largura)` desenha num canvas e anima; `avatarName` (escolhido ou posição entre ids ordenados, igual ao Android) |
 | `src/ui/wall.ts`, `src/style.css` | Tema Dungeon do app (`ui/theme/Dungeon.kt`): cores escuro/claro pelo aparelho, fonte Pixelify Sans (`public/fonts`, licença OFL em `public/licencas`), cantos chanfrados, parede de pedra com luz de tocha |
 | `src/main.ts` | Roteamento: convite no `#` → entrar; senão última missão; senão início |
