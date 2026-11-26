@@ -18,10 +18,10 @@ describe('parseInvite', () => {
     expect(parseInvite(`Bora pra praia! ${fixture} te espero\nlá`)?.id).toBe(inv.id)
   })
   test('aceita link com #', () => {
-    expect(parseInvite(`https://x.github.io/VisionPWA/#${fixture}`)?.id).toBe(inv.id)
+    expect(parseInvite(`https://x.github.io/vision-web/#${fixture}`)?.id).toBe(inv.id)
   })
   test('round trip com inviteLink', () => {
-    expect(parseInvite(inviteLink(inv, 'https://x.github.io/VisionPWA/'))).toEqual(inv)
+    expect(parseInvite(inviteLink(inv, 'https://x.github.io/vision-web/'))).toEqual(inv)
   })
   test('lixo e base64 inválido viram null', () => {
     expect(parseInvite('oi')).toBeNull()

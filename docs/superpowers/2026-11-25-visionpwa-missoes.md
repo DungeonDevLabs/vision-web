@@ -1,4 +1,4 @@
-# VisionPWA — missões em grupo Implementation Plan
+# vision-web — missões em grupo Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -8,11 +8,11 @@
 
 **Tech Stack:** TypeScript, Vite, Vitest, WebCrypto, IndexedDB (lib `idb-keyval`), Service Worker + manifest, GitHub Pages.
 
-**Spec:** `docs/superpowers/specs/2026-11-25-visionpwa-missoes-design.md` (no repo Vision até o repo novo existir; copiar para `VisionPWA/docs/`).
+**Spec:** `docs/superpowers/specs/2026-11-25-visionpwa-missoes-design.md` (no repo Vision até o repo novo existir; copiar para `vision-web/docs/`).
 
 ## Global Constraints
 
-- Repo novo: `d:\Documents\7 - Projetos pessoais\DVL\VisionPWA` (pasta acima do Vision). Código fonte de referência: `Vision/app/src/main/java/app/vision/finance/mission/` (`MissionPack.kt`, `DriveMissionTransport.kt`, `MissionRules.kt`).
+- Repo novo: `d:\Documents\7 - Projetos pessoais\DVL\vision-web` (pasta acima do Vision). Código fonte de referência: `Vision/app/src/main/java/app/vision/finance/mission/` (`MissionPack.kt`, `DriveMissionTransport.kt`, `MissionRules.kt`).
 - Pacote: `VSN1` (ASCII) + nonce 12 B + AES-256-GCM, tag 128 bits, `VSN1` como AAD; JSON `{v:1, missionId, missionName, start, end?, from, members[], expenses[], sentAt}`; máx. 1 000 000 B; v == 1.
 - Convite: prefixo `vision-mission:` + base64url sem padding do JSON `{id,name,start,end?,key,from}`; chave = 32 B em base64.
 - Valores em centavos inteiros (`number` seguro ou `bigint`; usar `number` e validar `Number.isSafeInteger`).
@@ -32,7 +32,7 @@
 ## File Structure
 
 ```
-VisionPWA/
+vision-web/
   index.html, vite.config.ts, package.json, tsconfig.json
   public/manifest.webmanifest, public/sw.js, public/icons/
   src/core/crypto.ts      # sealBytes/openBytes (VSN1)
@@ -53,7 +53,7 @@ VisionPWA/
 
 ### Task 1: Scaffold + deploy + spike do login no iPhone (portão)
 
-**Files:** Create: `package.json`, `vite.config.ts`, `tsconfig.json`, `index.html`, `public/manifest.webmanifest`, `public/sw.js`, `src/drive/auth.ts`, `src/spike.ts`, `.github/workflows/pages.yml`, `.env.example`; init git no `VisionPWA`.
+**Files:** Create: `package.json`, `vite.config.ts`, `tsconfig.json`, `index.html`, `public/manifest.webmanifest`, `public/sw.js`, `src/drive/auth.ts`, `src/spike.ts`, `.github/workflows/pages.yml`, `.env.example`; init git no `vision-web`.
 
 **Interfaces:**
 - Produces: `login(): void` (redireciona ao Google), `handleRedirect(): Promise<boolean>` (lê o token do retorno), `getToken(): Promise<string | null>` (válido, renova com `prompt=none` e devolve null se precisar de login).
@@ -71,7 +71,7 @@ VisionPWA/
 **Interfaces:**
 - Produces: `sealBytes(plain: Uint8Array, key: string): Promise<Uint8Array>`, `openBytes(bytes: Uint8Array, key: string): Promise<Uint8Array>` (rejeita com `Error` para chave errada, byte trocado, sem cabeçalho ou > 1 000 064 B), `looksLikePack(bytes): boolean`, `newMissionKey(): string`.
 
-- [ ] **Step 1:** No Vision, escrever um teste JVM temporário (não commitar) que usa `seal`/`sealBytes` com chave fixa e grava em `build/fixtures`: `pack-android.vision` (pacote válido com 2 membros e 3 gastos, 1 lápide), `key.txt`, `pack-android.json` (o JSON esperado). Copiar para `VisionPWA/test/fixtures/`.
+- [ ] **Step 1:** No Vision, escrever um teste JVM temporário (não commitar) que usa `seal`/`sealBytes` com chave fixa e grava em `build/fixtures`: `pack-android.vision` (pacote válido com 2 membros e 3 gastos, 1 lápide), `key.txt`, `pack-android.json` (o JSON esperado). Copiar para `vision-web/test/fixtures/`.
 - [ ] **Step 2: testes** em `test/crypto.test.ts`: `abre o arquivo do Android e bate com o JSON`; `seal→open devolve o mesmo`; `chave errada rejeita`; `um byte trocado rejeita`; `arquivo sem VSN1 rejeita`; `looksLikePack` falso para < 28 B.
 - [ ] **Step 3:** Rodar `npx vitest run test/crypto.test.ts` → FAIL (módulo não existe).
 - [ ] **Step 4:** Implementar com `crypto.subtle` (`AES-GCM`, `additionalData = "VSN1"`, `tagLength: 128`, nonce aleatório de 12 B no `seal`).

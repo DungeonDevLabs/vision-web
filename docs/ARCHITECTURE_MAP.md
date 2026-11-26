@@ -1,4 +1,4 @@
-# VisionPWA — mapa da arquitetura
+# vision-web — mapa da arquitetura
 
 PWA para amigos de iPhone participarem das **missões em grupo** do Vision (Android). Sem servidor: o grupo se sincroniza pelo Drive de cada pessoa, no mesmo formato do app Android. Design: `docs/superpowers/2026-11-25-visionpwa-missoes-design.md`; plano: `docs/superpowers/2026-11-25-visionpwa-missoes.md`.
 

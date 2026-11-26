@@ -1,6 +1,6 @@
-# VisionPWA — missões em grupo para iPhone (design)
+# vision-web — missões em grupo para iPhone (design)
 
-Repo novo `VisionPWA`, na pasta acima do Vision (`d:\Documents\7 - Projetos pessoais\DVL\VisionPWA`). Este doc mora aqui até o repo existir; depois de aprovado, copiar para `VisionPWA/docs/`.
+Repo novo `vision-web`, na pasta acima do Vision (`d:\Documents\7 - Projetos pessoais\DVL\vision-web`). Este doc mora aqui até o repo existir; depois de aprovado, copiar para `vision-web/docs/`.
 
 ## Por quê
 Amigos com iPhone não rodam o Vision (Android). A missão em grupo é a feature que precisa de todo mundo, então a PWA começa por ela. Versão enxuta, sem o resto do app.
@@ -52,4 +52,4 @@ Estrutura de pastas, UI/visual (seguir o tom do app: pixel art opcional), estado
 
 ## Pré-requisitos seus (fora do código)
 - Projeto no Google Cloud com cliente OAuth tipo Web e API key nova restrita ao domínio da PWA, Drive API ligada.
-- Repo `VisionPWA` no GitHub com Pages ligado (ou outro host estático com endereço fixo).
+- Repo `vision-web` no GitHub com Pages ligado (ou outro host estático com endereço fixo).

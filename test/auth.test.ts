@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest'
 import { authUrl, completeLogin, readToken, type KV } from '../src/drive/auth'
 
 const kv = (): KV & { m: Map<string, string> } => { const m = new Map<string, string>(); return { m, get: (k) => m.get(k) ?? null, set: (k, v) => void m.set(k, v), del: (k) => void m.delete(k) } }
-const cfg = { clientId: 'cid.apps.googleusercontent.com', redirectUri: 'https://x.github.io/VisionPWA/' }
+const cfg = { clientId: 'cid.apps.googleusercontent.com', redirectUri: 'https://x.github.io/vision-web/' }
 
 describe('authUrl', () => {
   test('pede só drive.file, token na volta, e guarda o state', () => {

@@ -1,5 +1,5 @@
 // Rede primeiro, cache de reserva: abre offline com a última versão vista. Só arquivos do próprio site.
-const CACHE = 'vision-pwa-v1'
+const CACHE = 'vision-web-v1'
 self.addEventListener('install', () => self.skipWaiting())
 self.addEventListener('activate', (e) => e.waitUntil(clients.claim()))
 self.addEventListener('fetch', (e) => {

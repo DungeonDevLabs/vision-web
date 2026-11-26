@@ -1,4 +1,4 @@
-# VisionPWA
+# vision-web
 
 Missões em grupo do Vision para quem tem iPhone. Instale na tela inicial pelo Safari (Compartilhar → Adicionar à Tela de Início), cole o convite que o amigo do Android mandou e lance seus gastos.
 
