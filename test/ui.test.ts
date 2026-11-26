@@ -21,6 +21,7 @@ import { parseInvite } from '../src/core/invite'
 
 const inviteText = readFileSync('test/fixtures/invite.txt', 'utf8').trim()
 const flush = () => new Promise((r) => setTimeout(r, 20))
+HTMLCanvasElement.prototype.getContext = (() => null) as never // jsdom não desenha canvas
 beforeEach(async () => { await clearAll(); document.body.innerHTML = '' })
 
 describe('entrar', () => {
@@ -65,7 +66,7 @@ describe('missão', () => {
     await putMembers(m.id, [{ id: ME, name: 'Eu', updatedAt: 1, avatar: 0 }, { id: BIA, name: 'Bia', updatedAt: 1, avatar: 0 }])
     await putExpenses(m.id, [{ id: 'eeeeeeee-0000-4000-8000-000000000001', authorId: BIA, payerId: BIA, description: 'Jantar', date: '2026-12-21', amountCents: 1000, split: { [ME]: 500, [BIA]: 500 }, kind: 'GASTO', deleted: false, updatedAt: 1 }])
     const el = await missionScreen(m, () => {})
-    ;[...el.querySelectorAll('.tabs button')][1].dispatchEvent(new MouseEvent('click'))
+    ;[...el.querySelectorAll('.pills button')][1].dispatchEvent(new MouseEvent('click'))
     await flush()
     expect(el.textContent).toContain('Eu paga Bia')
     expect([...el.querySelectorAll('button')].some((b) => b.textContent === 'Paguei')).toBe(true)

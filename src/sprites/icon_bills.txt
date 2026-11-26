@@ -1,0 +1,22 @@
+name: icon_bills
+size: 16x16
+frames: 1
+fps: 0
+loop: no
+--- 1
+................
+..kkkkkkkkkkkk..
+.knnnnnnnnnnnnk.
+..kkkkkkkkkkkk..
+.kgggggggggggk..
+.kgooooooooogk..
+.kgggggggggggk..
+.kgooooooooogk..
+.kgggggggggggk..
+.kgooooogggggk..
+.kgggggggggggk..
+..kkkkkkkkkkkk..
+.knnnnnnnnnnnnk.
+..kkkkkkkkkkkk..
+................
+................

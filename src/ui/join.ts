@@ -2,6 +2,7 @@ import { parseInvite, type Invite } from '../core/invite'
 import { joinFromInvite } from '../sync'
 import { listMissions, type Mission } from '../store'
 import { h, t } from './dom'
+import { sprite } from './sprite'
 
 /** Tela inicial: missões que já tenho + entrar por convite (colar o código ou abrir o link). */
 export async function joinScreen(go: (m: Mission) => void, invite: Invite | null = null): Promise<HTMLElement> {
@@ -23,10 +24,12 @@ export async function joinScreen(go: (m: Mission) => void, invite: Invite | null
   }, t('Entrar na missão', 'Join mission'))
   const mine = await listMissions()
   return h('section', {},
-    h('h1', {}, 'Vision'),
+    h('div', { class: 'empty' }, sprite('dragon_idle', 112), h('h1', {}, 'Vision'),
+      h('p', { class: 'muted' }, t('Missões em grupo, agora no iPhone', 'Group missions, now on iPhone'))),
     mine.length ? h('div', {}, h('h2', {}, t('Suas missões', 'Your missions')),
-      ...mine.map((m) => h('button', { class: 'row', onclick: () => go(m) }, m.name))) : null,
-    h('h2', {}, t('Entrar com convite', 'Join with an invite')),
-    inv ? null : code, info, name, enter, err,
+      ...mine.map((m) => h('button', { class: 'row', onclick: () => go(m) }, sprite('torch', 14), m.name))) : null,
+    h('div', { class: 'card' },
+      h('h2', { style: 'margin-top:0' }, t('Entrar com convite', 'Join with an invite')),
+      inv ? null : code, info, name, enter, err),
   )
 }

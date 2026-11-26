@@ -6,9 +6,11 @@ import { publishNow } from './live'
 import { joinScreen } from './ui/join'
 import { missionScreen } from './ui/mission'
 import { supportDrawer } from './ui/support'
+import { applyWall } from './ui/wall'
 
 const LAST = 'last_mission'
 const app = document.getElementById('app')!
+applyWall(document.getElementById('wall')!)
 document.body.append(supportDrawer())
 
 const show = (el: HTMLElement) => app.replaceChildren(el)
