@@ -21,6 +21,8 @@ TypeScript + Vite (sem framework), Vitest (+ jsdom, fake-indexeddb), WebCrypto, 
 | `src/drive/transport.ts` | Drive REST: publicar (público por link, cifrado), ler só com API key, apagar |
 | `src/live.ts` | Transporte real, publicação com atraso de 10 s, estado "precisa entrar" |
 | `src/ui/*` | `join` (entrar), `mission` (gastos + acertos), `expense` (formulário), `support` (moedinha "Apoie o Vision"), `dom` (helpers; texto sempre como texto) |
+| `src/ui/sprite.ts`, `src/sprites/` | Sprites em texto copiados do app (`assets/pixel`, uma letra = um pixel, paleta única); `sprite(nome, largura)` desenha num canvas e anima; `avatarName` (escolhido ou posição entre ids ordenados, igual ao Android) |
+| `src/ui/wall.ts`, `src/style.css` | Tema Dungeon do app (`ui/theme/Dungeon.kt`): cores escuro/claro pelo aparelho, fonte Pixelify Sans (`public/fonts`, licença OFL em `public/licencas`), cantos chanfrados, parede de pedra com luz de tocha |
 | `src/main.ts` | Roteamento: convite no `#` → entrar; senão última missão; senão início |
 | `spike.html` + `src/spike.ts` | Teste manual do login no iPhone instalado (fora do app) |
 | `test/fixtures/` | Arquivo, chave e convite **gerados pelo app Android** (a cifra e o merge são testados contra eles) |
