@@ -17,7 +17,7 @@ TypeScript + Vite (sem framework), Vitest (+ jsdom, fake-indexeddb), WebCrypto, 
 | `src/store.ts` | IndexedDB: missões, membros, gastos, última leitura |
 | `src/ledger.ts` | Meus gastos: `saveExpense`, `deleteExpense` (lápide), `settleUp` ("Paguei" = `ACERTO`) |
 | `src/sync.ts` | `joinFromInvite`, `publishMine` (2× na primeira vez), `fetchOthers` (≥ 2 min), `exportPackFile` |
-| `src/drive/auth.ts` | Login Google por **redirecionamento** (fluxo implícito, `drive.file`); token em `localStorage` |
+| `src/drive/auth.ts` | Login Google por **redirecionamento** (fluxo implícito, `drive.file`); token em `localStorage`. Ao abrir o app com o token vencido, tenta renovar em silêncio (`prompt=none`, no máximo 1x a cada 10 min para não entrar em laço); se o Google pedir tela, o aviso "Entrar com Google" aparece só quando o gasto for enviado |
 | `src/drive/transport.ts` | Drive REST: publicar (público por link, cifrado), ler só com API key, apagar |
 | `src/live.ts` | Transporte real, publicação com atraso de 10 s, estado "precisa entrar" |
 | `src/ui/*` | `join` (entrar), `mission` (gastos + acertos), `expense` (formulário), `support` (moedinha "Apoie o Vision"), `dom` (helpers; texto sempre como texto) |

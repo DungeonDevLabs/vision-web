@@ -1,5 +1,5 @@
 import './style.css'
-import { handleRedirect } from './drive/auth'
+import { handleRedirect, trySilentLogin } from './drive/auth'
 import { parseInvite } from './core/invite'
 import { getMission, type Mission } from './store'
 import { publishNow } from './live'
@@ -26,6 +26,7 @@ async function openMission(m: Mission) {
 async function boot() {
   const login = handleRedirect() // 'ok' = acabou de voltar do Google
   const invite = parseInvite(location.hash)
+  if (login === 'none' && !invite && trySilentLogin()) return // token venceu: renova em silêncio e a página volta sozinha
   if (invite) {
     history.replaceState(null, '', location.pathname + location.search)
     const have = await getMission(invite.id)

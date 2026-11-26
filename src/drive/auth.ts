@@ -28,6 +28,7 @@ export function completeLogin(hash: string, kv: KV, now = Date.now()): LoginResu
   kv.del('oauth_state')
   if (!expected || p.get('state') !== expected) return 'bad-state'
   if (error || !token) return error ?? 'none'
+  kv.set('oauth_ever', '1')
   kv.set('oauth_token', token)
   kv.set('oauth_exp', String(now + Number(p.get('expires_in') ?? 0) * 1000))
   return 'ok'
@@ -39,11 +40,26 @@ export function readToken(kv: KV, now = Date.now()): string | null {
   return t && exp - SKEW_MS > now ? t : null
 }
 
+const SILENT_EVERY_MS = 10 * 60_000
+
+/** Já entrou alguma vez, o token venceu e não tentou em silêncio há pouco (evita laço de redirecionamentos). */
+export function shouldSilentLogin(kv: KV, now = Date.now()): boolean {
+  return !!kv.get('oauth_ever') && !readToken(kv, now) && now - Number(kv.get('oauth_silent_at') ?? 0) > SILENT_EVERY_MS
+}
+export const markSilentAttempt = (kv: KV, now = Date.now()): void => kv.set('oauth_silent_at', String(now))
+
 const config = (): AuthConfig => ({
   clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID as string,
   redirectUri: location.origin + import.meta.env.BASE_URL,
 })
 export const login = (silent = false): void => { location.href = authUrl(config(), localKV, silent) }
+/** Renovar sem tela: se o Google ainda lembra de você, volta na hora. Chame ao abrir o app. */
+export function trySilentLogin(): boolean {
+  if (!shouldSilentLogin(localKV)) return false
+  markSilentAttempt(localKV)
+  login(true)
+  return true
+}
 export const getToken = async (): Promise<string | null> => readToken(localKV)
 /** Chame ao abrir a página; limpa o fragmento do token da barra de endereço. */
 export function handleRedirect(): LoginResult {

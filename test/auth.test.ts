@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { authUrl, completeLogin, readToken, type KV } from '../src/drive/auth'
+import { authUrl, completeLogin, markSilentAttempt, readToken, shouldSilentLogin, type KV } from '../src/drive/auth'
 
 const kv = (): KV & { m: Map<string, string> } => { const m = new Map<string, string>(); return { m, get: (k) => m.get(k) ?? null, set: (k, v) => void m.set(k, v), del: (k) => void m.delete(k) } }
 const cfg = { clientId: 'cid.apps.googleusercontent.com', redirectUri: 'https://x.github.io/vision-web/' }
@@ -51,4 +51,16 @@ describe('readToken', () => {
     expect(readToken(s, 3_541_000)).toBeNull()
   })
   test('sem token guardado devolve null', () => expect(readToken(kv(), 0)).toBeNull())
+})
+
+describe('shouldSilentLogin', () => {
+  const logged = () => { const s = kv(); authUrl(cfg, s, false, 'st'); completeLogin('#access_token=T&expires_in=3600&state=st', s, 0); return s }
+  test('nunca entrou: não tenta em silêncio', () => expect(shouldSilentLogin(kv(), 0)).toBe(false))
+  test('já entrou e o token venceu: tenta', () => expect(shouldSilentLogin(logged(), 4_000_000)).toBe(true))
+  test('token ainda vale: não tenta', () => expect(shouldSilentLogin(logged(), 1_000)).toBe(false))
+  test('tentou há pouco: não repete (evita laço de redirecionamentos)', () => {
+    const s = logged(); markSilentAttempt(s, 4_000_000)
+    expect(shouldSilentLogin(s, 4_000_000 + 9 * 60_000)).toBe(false)
+    expect(shouldSilentLogin(s, 4_000_000 + 11 * 60_000)).toBe(true)
+  })
 })
